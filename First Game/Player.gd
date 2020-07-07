@@ -41,9 +41,9 @@ func _process(delta):      # runs every frame
 func _on_Player_body_entered(body):      # i created this signal in the "node" tab
 	hide()
 	emit_signal("hit")
-	call_deferred("set_monitoring", false)    # so you dont get double hit
+	call_deferred("set_monitoring", false)    # so you dont get double hit, and so it doesnt get hit when hidden
 	
-func start(pos):
+func start(pos):        # tells the player where to start
 	position = pos
 	show()
 	monitoring = true

@@ -23,8 +23,10 @@ func _process(delta):      # runs every frame
 	if velocity.length() > 0:
 		$AnimatedSprite.play()
 		velocity = velocity.normalized() * SPEED   # normalize resets length to one; because diagonal would get -2 or 2
+		$Trail.emitting = true
 	else:
 		$AnimatedSprite.stop()
+		$Trail.emitting = false
 		
 	position += velocity * delta
 	position.x = clamp(position.x, 0, screensize.x)  # doesnt let you go off screen

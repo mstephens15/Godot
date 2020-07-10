@@ -20,6 +20,7 @@ func _process(delta):      # runs every frame
 		velocity.y += 1
 	if Input.is_action_pressed("ui_up"):
 		velocity.y -= 1
+
 	if velocity.length() > 0:
 		$AnimatedSprite.play()
 		velocity = velocity.normalized() * SPEED   # normalize resets length to one; because diagonal would get -2 or 2
@@ -39,6 +40,11 @@ func _process(delta):      # runs every frame
 	elif velocity.y != 0:
 		$AnimatedSprite.flip_v = velocity.y > 0
 
+# quits game if you hit escape
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.scancode == KEY_ESCAPE:
+			get_tree().quit()
 
 func _on_Player_body_entered(body):      # i created this signal in the "node" tab
 	hide()

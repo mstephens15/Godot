@@ -8,7 +8,7 @@ func _ready():
 	
 func new_game():
 	score = 0
-	$Player.start($StartPosition.position)
+	$Player.start($StartPosition.position) 
 	$StartTimer.start()
 	$HUD.show_message("Ready??")
 	$HUD.update_score(score)
@@ -21,7 +21,7 @@ func game_over():
 	$DeathSound.play()
 	$Music.stop()
 
-func _on_StartTimer_timeout():
+func _on_StartTimer_timeout():     # when the start timer stops its 1.5 second timer, then...
 	$ScoreTimer.start()
 	$MobTimer.start()
 
@@ -38,3 +38,4 @@ func _on_MobTimer_timeout():
 	direction += rand_range(-PI/4, PI/4)   # 45 degrees
 	mob.rotation = direction
 	mob.set_linear_velocity(Vector2(rand_range(mob.MIN_SPEED, mob.MAX_SPEED), 0).rotated(direction))    # property of RigidBody2D
+

@@ -10,7 +10,7 @@ extents = Vector2( 38.425, 40.0408 )
 [node name="Player" instance=ExtResource( 1 )]
 position = Vector2( 146.33, 128.669 )
 script = ExtResource( 3 )
-speed = 200
+speed = 250
 rotation_speed = 1.0
 gun_cooldown = 0.5
 health = 100

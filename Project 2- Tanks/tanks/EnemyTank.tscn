@@ -4,13 +4,15 @@
 [ext_resource path="res://tanks/Tank.tscn" type="PackedScene" id=2]
 [ext_resource path="res://tanks/EnemyTank.gd" type="Script" id=3]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 40.0244, 38.6692 )
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=2]
 radius = 557.723
 
 [node name="EnemyTank" instance=ExtResource( 2 )]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource( 3 )
 speed = 150
 gun_cooldown = 0.5
@@ -30,12 +32,12 @@ region_enabled = true
 region_rect = Rect2( 371, 13, 60, 26 )
 
 [node name="CollisionShape2D" parent="." index="2"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="DetectRadius" type="Area2D" parent="." index="4"]
-visible = false
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectRadius" index="0"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 [connection signal="body_entered" from="DetectRadius" to="." method="_on_DetectRadius_body_entered"]
 [connection signal="body_exited" from="DetectRadius" to="." method="_on_DetectRadius_body_exited"]

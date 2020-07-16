@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://terrain/terrain_tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://tanks/Player.tscn" type="PackedScene" id=2]
@@ -8,6 +8,11 @@
 [sub_resource type="Curve2D" id=1]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 324.627, -31.1365, 0, 0, 0, 0, 318.213, 502.13, -73.8359, -0.752715, 73.8359, 0.752715, 389.423, 579.402, 0, 0, 0, 0, 522.754, 579.402, 0.731048, 69.2498, -0.731048, -69.2498, 575.783, 512.736, 0, 0, 0, 0, 574.725, 1.25638, 50.4707, 0.0865507, -50.4707, -0.0865507, 535.367, -70.304, 39.186, -10.7801, -39.186, 10.7801, 356.538, -66.5944, 0, 0, 0, 0, 324.627, -31.1365 )
+}
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0.230103, 1090.57, 2.30861, -80.8014, -2.30861, 80.8014, -65.8438, 1156.64, 0, 0, 0, 0, -1.83472, 1220.65, 0, 0, 0, 0, 402.868, 1222.71, -0.769537, 31.551, 0.769537, -31.551, 452.423, 1187.61, 0, 40.0159, 0, -40.0159, 450.358, 1131.86, 0, 0, 0, 0, 406.997, 1090.57, 0, 0, 0, 0, 0.230103, 1090.57 )
 }
 
 [node name="Map01" type="Node2D"]
@@ -31,7 +36,20 @@ curve = SubResource( 1 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Paths/Path2D"]
 position = Vector2( 324.627, -31.1365 )
-rotation = 1.58283
+rotation = 1.58282
 
 [node name="EnemyTank" parent="Paths/Path2D/PathFollow2D" instance=ExtResource( 4 )]
-detect_radius = 300
+detect_radius = 500
+
+[node name="Path2D2" type="Path2D" parent="Paths"]
+curve = SubResource( 2 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Paths/Path2D2"]
+position = Vector2( 0.230103, 1090.57 )
+rotation = -2.98612
+
+[node name="EnemyTank" parent="Paths/Path2D2/PathFollow2D" instance=ExtResource( 4 )]
+position = Vector2( -43.9485, 6.46912 )
+rotation = 3.14159
+detect_radius = 100
+[connection signal="shoot" from="Player" to="." method="_on_Tank_shoot"]

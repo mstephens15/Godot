@@ -1,4 +1,4 @@
-extends "res://tanks/tank.gd"
+extends "res://tanks/Tank.gd"
 
 # override control function for our specific character
 
@@ -15,5 +15,8 @@ func control(delta):
 		velocity = Vector2(speed, 0).rotated(rotation)
 	if Input.is_action_pressed("back"):
 		velocity = Vector2(-speed/2, 0).rotated(rotation)
+		velocity /= 2.0
+	if Input.is_action_just_pressed("click"):
+		shoot()
 		
 

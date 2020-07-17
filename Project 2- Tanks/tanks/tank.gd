@@ -1,7 +1,7 @@
 # our generic tank script, used as a baseline for player and enemy tanks
 extends KinematicBody2D
 
-signal shoot
+signal shoot   # gets connected to the map scene, NOT PlayerTank due to various bugs (if player dies, bullet goes away)
 signal health_changed
 signal dead             # when tank dies
 
@@ -22,10 +22,10 @@ func control(delta):    # called every frame, let you input keyboard controls
 	pass
 
 func shoot():
-	if can_shoot:     # shoot bullet, and then...
-		can_shoot = false    # start cooldown timer
+	if can_shoot:    # shoot bullet, and then...
+		can_shoot = false   # start timer for cooldown
 		$GunTimer.start()
-		var dir = Vector2(1, 0).rotated($Turret.global_rotation)    
+		var dir = Vector2(1, 0).rotated($Turret.global_rotation)
 		emit_signal('shoot', Bullet, $Turret/Muzzle.global_position, dir) # passing the signal 'shoot' to the Map scene
 
 func _physics_process(delta):

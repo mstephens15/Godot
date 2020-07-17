@@ -14,6 +14,7 @@ func set_camera_limits():
 # receives the 'shoot' signal form tank.gd
 # have to go to Player, and connect 'shoot' signal to this
 func _on_Tank_shoot(bullet, _position, _direction):
-	var b = bullet.instance()
+	var b = bullet.instance() 
 	add_child(b)
 	b.start(_position, _direction)
+

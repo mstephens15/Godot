@@ -9,17 +9,29 @@ export (PackedScene) var Bullet    # can accept a scene; for example, go to play
 export (int) var max_speed             # how fast bullet moves
 export (float) var rotation_speed  # how fast tank rotates
 export (float) var gun_cooldown
-export (int) var health
+export (int) var max_health
 
 var velocity = Vector2()
 var can_shoot = true
 var alive = true
+var health
 
 func _ready():
+	health= max_health
+	emit_signal("health_changed", health * 100/max_health)  # displayed as %
 	$GunTimer.wait_time = gun_cooldown
 	
 func control(delta):    # called every frame, let you input keyboard controls 
 	pass
+
+func take_damage(amount):
+	health -= amount
+	emit_signal("health_changed", health * 100/max_health)  # displayed as %)
+	if health <= 0:
+		explode()
+
+func explode():
+	queue_free()
 
 func shoot():
 	if can_shoot:    # shoot bullet, and then...

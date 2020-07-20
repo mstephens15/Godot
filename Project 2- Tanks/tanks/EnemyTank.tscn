@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/onlyObjects_retina_rotated.png" type="Texture" id=1]
 [ext_resource path="res://tanks/Tank.tscn" type="PackedScene" id=2]
 [ext_resource path="res://tanks/EnemyTank.gd" type="Script" id=3]
+[ext_resource path="res://bullets/EnemyBullet.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 40.0244, 38.6692 )
@@ -11,9 +12,12 @@ extents = Vector2( 40.0244, 38.6692 )
 collision_layer = 4
 collision_mask = 3
 script = ExtResource( 3 )
+Bullet = ExtResource( 4 )
+max_speed = 300
+rotation_speed = 100.0
 gun_cooldown = 0.5
-health = 100
-turret_speed = 1.0
+max_health = 30
+turret_speed = 5.0
 detect_radius = 200
 
 [node name="Body" parent="." index="0"]

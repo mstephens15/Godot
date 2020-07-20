@@ -6,7 +6,7 @@ signal health_changed
 signal dead             # when tank dies
 
 export (PackedScene) var Bullet    # can accept a scene; for example, go to player scene, and drag PlayerBullet into this
-export (int) var speed             # how fast bullet moves
+export (int) var max_speed             # how fast bullet moves
 export (float) var rotation_speed  # how fast tank rotates
 export (float) var gun_cooldown
 export (int) var health

@@ -28,6 +28,7 @@ tile_data = PoolIntArray( -65538, 0, 0, -65537, 0, 0, -131072, 0, 0, -131071, 0,
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, 30 )
+max_speed = 300
 
 [node name="Paths" type="Node2D" parent="."]
 
@@ -42,6 +43,7 @@ rotation = 1.58282
 
 [node name="EnemyTank" parent="Paths/Path2D/PathFollow2D" instance=ExtResource( 4 )]
 Bullet = ExtResource( 5 )
+max_speed = 200
 rotation_speed = 4.0
 turret_speed = 2.0
 
@@ -55,6 +57,7 @@ rotation = -2.98612
 [node name="EnemyTank" parent="Paths/Path2D2/PathFollow2D" instance=ExtResource( 4 )]
 position = Vector2( -43.9485, 6.46912 )
 Bullet = ExtResource( 5 )
+max_speed = 200
 rotation_speed = 2.0
 turret_speed = 2.0
 detect_radius = 400

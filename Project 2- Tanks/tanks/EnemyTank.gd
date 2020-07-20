@@ -5,6 +5,7 @@ onready var parent = get_parent()
 export (float) var turret_speed
 export (int) var detect_radius
 
+var speed = 0
 var target = null
 
 # makes it so each enemy tank has their own size collision shape radius
@@ -14,6 +15,10 @@ func _ready():
 	$DetectRadius/CollisionShape2D.shape.radius = detect_radius
 
 func control(delta):
+	if $LookAhead.is_colliding() or $LookAhead2.is_colliding():
+		speed = lerp(speed, 0, 0.1)     # gradually slowing down
+	else:
+		speed = lerp(speed, max_speed, 0.1)
 	if parent is PathFollow2D:
 		parent.set_offset(parent.get_offset() + speed * delta)
 		position = Vector2()       # will always keep enemy tank on path; had an issue bc enemy and us both kinematic so it would get stuck; this is relative to parent position

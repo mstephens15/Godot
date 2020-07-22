@@ -17,7 +17,7 @@ var alive = true
 var health
 
 func _ready():
-	health= max_health
+	health = max_health
 	emit_signal("health_changed", health * 100/max_health)  # displayed as %
 	$GunTimer.wait_time = gun_cooldown
 	

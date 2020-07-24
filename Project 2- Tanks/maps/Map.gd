@@ -2,6 +2,8 @@ extends Node2D
 
 func _ready():
 	set_camera_limits()
+	Input.set_custom_mouse_cursor(load("res://assets/UI/crossair_black.png"), 
+			Input.CURSOR_ARROW, Vector2(16, 16))   # custom mouse cursor
 	
 func set_camera_limits():
 	var map_limits = $Ground.get_used_rect() # for example, gets that the map is 10 tiles wide

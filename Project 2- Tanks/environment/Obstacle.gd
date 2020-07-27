@@ -1,4 +1,4 @@
-tool   # this script now runs while in editor
+tool   # this script now runs while in editor, so we get live updates in Obstacle Scene, which means itll be live in the Map scene too
 extends StaticBody2D
 
 enum Items {barrelBlack_side, barrelBlack_top, barrelGreen_side,
@@ -30,13 +30,13 @@ var regions = {
 	Items.treeGreen_small: Rect2(694, 190, 72, 72),
 }
 
-export (Items) var type setget _update
+export (Items) var type setget _update   # export every item in Items; creates a script variable called type
 
 func _update(_type):
 	type = _type
 	if !Engine.editor_hint:
 		yield(self, 'tree_entered')
-	$Sprite.region_rect = regions[type]
-	var rect = RectangleShape2D.new()
-	rect.extents = $Sprite.region_rect.size / 2
-	$CollisionShape2D.shape = rect
+	$Sprite.region_rect = regions[type]   # sets sprite dimensions to Rect2(...) in dictionary above
+	var rect = RectangleShape2D.new()     # setting up collision shape dimensions
+	rect.extents = $Sprite.region_rect.size / 2    # extends the rectangle from the origin to the corners of the shape; extents are measured from center
+	$CollisionShape2D.shape = rect        # uses the extents as its final rectangle shape

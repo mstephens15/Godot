@@ -51,6 +51,7 @@ func explode():
 	$Body.hide()
 	$Explosion.show()
 	$Explosion.play()
+	emit_signal('dead')
 
 # quit if hitting escape
 func _unhandled_input(event):

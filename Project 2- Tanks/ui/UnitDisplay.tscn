@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://UnitDisplay.gd" type="Script" id=1]
+[ext_resource path="res://ui/UnitDisplay.gd" type="Script" id=1]
 [ext_resource path="res://assets/UI/barHorizontal_green_mid 200.png" type="Texture" id=2]
 
 [node name="UnitDisplay" type="Node2D"]

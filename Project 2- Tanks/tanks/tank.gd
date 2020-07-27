@@ -30,21 +30,27 @@ func take_damage(amount):
 	if health <= 0:
 		explode()
 
-func explode():
-	queue_free()
-
 func shoot():
 	if can_shoot:    # shoot bullet, and then...
 		can_shoot = false   # start timer for cooldown
 		$GunTimer.start()
 		var dir = Vector2(1, 0).rotated($Turret.global_rotation)
 		emit_signal('shoot', Bullet, $Turret/Muzzle.global_position, dir) # passing the signal 'shoot' to the Map scene
+		$AnimationPlayer.play('muzzle_flash')
 
 func _physics_process(delta):
 	if not alive:
 		return
 	control(delta)
 	move_and_slide(velocity)
+
+func explode():
+	$CollisionShape2D.set_deferred('disabled', true)
+	alive = false    # stops physics_process, so it wont move anymore
+	$Turret.hide()
+	$Body.hide()
+	$Explosion.show()
+	$Explosion.play()
 
 # quit if hitting escape
 func _unhandled_input(event):
@@ -54,3 +60,7 @@ func _unhandled_input(event):
 
 func _on_GunTimer_timeout():
 	can_shoot = true
+
+
+func _on_Explosion_animation_finished():
+	queue_free()   # once the animation of the explosion finishes, then destroy tank

@@ -34,8 +34,8 @@ export (Items) var type setget _update   # export every item in Items; creates a
 
 func _update(_type):
 	type = _type
-	if !Engine.editor_hint:
-		yield(self, 'tree_entered')
+	if !Engine.editor_hint:               # if script is not running in the editor...
+		yield(self, 'tree_entered')           # wait for sprite to be set until Obstacle is ready; godot reads from children (sprite and CollisionShape2D) -> parent (Obstacle)
 	$Sprite.region_rect = regions[type]   # sets sprite dimensions to Rect2(...) in dictionary above
 	var rect = RectangleShape2D.new()     # setting up collision shape dimensions
 	rect.extents = $Sprite.region_rect.size / 2    # extends the rectangle from the origin to the corners of the shape; extents are measured from center

@@ -11,6 +11,8 @@ export (float) var rotation_speed  # how fast tank rotates
 export (float) var gun_cooldown
 export (int) var max_health
 
+export (int) var gun_shots = 1     # number of bullets per shot; default is 1
+export (float, 0, 1.5) var gun_spread = 0.2   # contrain from (0,1.5); default is 0.2
 var velocity = Vector2()
 var can_shoot = true
 var alive = true
@@ -29,13 +31,23 @@ func take_damage(amount):
 	emit_signal("health_changed", health * 100/max_health)  # displayed as %)
 	if health <= 0:
 		explode()
+		
+func heal(amount):
+	health += amount
+	health = clamp(health, 0, max_health)
+	emit_signal("health_changed", health * 100/max_health)
 
-func shoot():
+func shoot(num, spread, target=null):
 	if can_shoot:    # shoot bullet, and then...
 		can_shoot = false   # start timer for cooldown
 		$GunTimer.start()
 		var dir = Vector2(1, 0).rotated($Turret.global_rotation)
-		emit_signal('shoot', Bullet, $Turret/Muzzle.global_position, dir) # passing the signal 'shoot' to the Map scene
+		if num > 1:      # if number of shots is more than one
+			for i in range(num):    # for every shot...
+				var a = -spread + i * (2*spread) / (num-1)  # get angle 
+				emit_signal('shoot', Bullet, $Turret/Muzzle.global_position, dir.rotated(a), target) # rotate by that direction
+		else:
+			emit_signal('shoot', Bullet, $Turret/Muzzle.global_position, dir, target) # passing the signal 'shoot' to the Map scene
 		$AnimationPlayer.play('muzzle_flash')
 
 func _physics_process(delta):

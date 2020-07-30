@@ -22,6 +22,8 @@ _data = {
 [node name="Map01" type="Node2D"]
 script = ExtResource( 3 )
 
+[node name="HUD" parent="." instance=ExtResource( 5 )]
+
 [node name="Ground" type="TileMap" parent="."]
 modulate = Color( 0.992157, 0.984314, 0.984314, 1 )
 tile_set = ExtResource( 1 )
@@ -32,6 +34,7 @@ tile_data = PoolIntArray( -131082, 0, 0, -131081, 1, 0, -131080, 0, 0, -131079, 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 64.6472, 509.64 )
 max_speed = 300
+ammo = 20
 
 [node name="Paths" type="Node2D" parent="."]
 
@@ -68,8 +71,6 @@ gun_spread = 1.0
 turret_speed = 8.0
 detect_radius = 400
 
-[node name="HUD" parent="." instance=ExtResource( 5 )]
-
 [node name="Obstacles" type="Node2D" parent="."]
 
 [node name="Obstacle" parent="Obstacles" instance=ExtResource( 6 )]
@@ -101,6 +102,11 @@ type = 18
 
 [node name="Pickup" parent="Items" instance=ExtResource( 8 )]
 position = Vector2( 313.163, 325.093 )
+
+[node name="Pickup2" parent="Items" instance=ExtResource( 8 )]
+position = Vector2( 253.513, 790.363 )
+type = 1
+[connection signal="ammo_changed" from="Player" to="HUD" method="update_ammo"]
 [connection signal="dead" from="Player" to="." method="_on_Player_dead"]
 [connection signal="health_changed" from="Player" to="HUD" method="update_healthbar"]
 [connection signal="shoot" from="Player" to="." method="_on_Tank_shoot"]

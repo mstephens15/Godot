@@ -3,6 +3,7 @@ extends KinematicBody2D
 
 signal shoot   # gets connected to the map scene, NOT PlayerTank due to various bugs (if player dies, bullet goes away)
 signal health_changed
+signal ammo_changed
 signal dead             # when tank dies
 
 export (PackedScene) var Bullet    # can accept a scene; for example, go to player scene, and drag PlayerBullet into this
@@ -13,6 +14,9 @@ export (int) var max_health
 
 export (int) var gun_shots = 1     # number of bullets per shot; default is 1
 export (float, 0, 1.5) var gun_spread = 0.2   # contrain from (0,1.5); default is 0.2
+export (int) var max_ammo = 20
+export (int) var ammo = -1 setget set_ammo   # if it has -1 ammo, then it is unlimited
+
 var velocity = Vector2()
 var can_shoot = true
 var alive = true
@@ -21,6 +25,7 @@ var health
 func _ready():
 	health = max_health
 	emit_signal("health_changed", health * 100/max_health)  # displayed as %
+	emit_signal('ammo_changed', ammo * 100/max_ammo)
 	$GunTimer.wait_time = gun_cooldown
 	
 func control(delta):    # called every frame, let you input keyboard controls 
@@ -38,7 +43,8 @@ func heal(amount):
 	emit_signal("health_changed", health * 100/max_health)
 
 func shoot(num, spread, target=null):
-	if can_shoot:    # shoot bullet, and then...
+	if can_shoot and ammo != 0:    # shoot bullet, and then...
+		self.ammo -= 1
 		can_shoot = false   # start timer for cooldown
 		$GunTimer.start()
 		var dir = Vector2(1, 0).rotated($Turret.global_rotation)
@@ -74,6 +80,11 @@ func _unhandled_input(event):
 func _on_GunTimer_timeout():
 	can_shoot = true
 
-
 func _on_Explosion_animation_finished():
 	queue_free()   # once the animation of the explosion finishes, then destroy tank
+
+func set_ammo(value):
+	if value > max_ammo:
+		value = max_ammo
+	ammo = value
+	emit_signal('ammo_changed', ammo * 100/max_ammo)

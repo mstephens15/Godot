@@ -51,6 +51,7 @@ rotation = 1.58282
 max_speed = 200
 rotation_speed = 4.0
 max_health = 50
+offroad_friction = 0.0
 turret_speed = 4.0
 
 [node name="Path2D2" type="Path2D" parent="Paths"]
@@ -66,6 +67,7 @@ Bullet = ExtResource( 7 )
 max_speed = 200
 rotation_speed = 2.0
 max_health = 50
+offroad_friction = 0.0
 gun_shots = 3
 gun_spread = 1.0
 turret_speed = 8.0

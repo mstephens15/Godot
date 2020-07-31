@@ -11,6 +11,7 @@ export (int) var max_speed             # how fast bullet moves
 export (float) var rotation_speed  # how fast tank rotates
 export (float) var gun_cooldown
 export (int) var max_health
+export (float) var offroad_friction  # slows tank down by this amount when not on road
 
 export (int) var gun_shots = 1     # number of bullets per shot; default is 1
 export (float, 0, 1.5) var gun_spread = 0.2   # contrain from (0,1.5); default is 0.2
@@ -21,9 +22,11 @@ var velocity = Vector2()
 var can_shoot = true
 var alive = true
 var health
+var map 
 
 func _ready():
 	health = max_health
+	$Smoke.emitting = false
 	emit_signal("health_changed", health * 100/max_health)  # displayed as %
 	emit_signal('ammo_changed', ammo * 100/max_ammo)
 	$GunTimer.wait_time = gun_cooldown
@@ -34,6 +37,8 @@ func control(delta):    # called every frame, let you input keyboard controls
 func take_damage(amount):
 	health -= amount
 	emit_signal("health_changed", health * 100/max_health)  # displayed as %)
+	if health < max_health / 2:
+		$Smoke.emitting = true
 	if health <= 0:
 		explode()
 		
@@ -41,6 +46,8 @@ func heal(amount):
 	health += amount
 	health = clamp(health, 0, max_health)
 	emit_signal("health_changed", health * 100/max_health)
+	if health > max_health / 2:
+		$Smoke.emitting = false
 
 func shoot(num, spread, target=null):
 	if can_shoot and ammo != 0:    # shoot bullet, and then...
@@ -60,7 +67,11 @@ func _physics_process(delta):
 	if not alive:
 		return
 	control(delta)
-	move_and_slide(velocity)
+	if map:
+		var tile = map.get_cellv(map.world_to_map(position))  # convert position to map coordinates, then get cell that is there
+		if tile in GLOBALS.slow_terrain:
+			velocity *= offroad_friction
+	move_and_slide(velocity)	
 
 func explode():
 	$CollisionShape2D.set_deferred('disabled', true)

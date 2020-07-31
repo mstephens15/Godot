@@ -19,6 +19,10 @@ config/name="Project 2- Tanks"
 run/main_scene="res://maps/Map01.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GLOBALS="*res://globals.gd"
+
 [display]
 
 window/size/height=800

@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Levels/TileSet.tres" type="TileSet" id=2]
+[ext_resource path="res://Hazards/SpikeTop.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Hoppy_Days_Assets/SFX/Chiptune_Adventures_1.ogg" type="AudioStream" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends AudioStreamPlayer
+
+func _ready():
+	play()"
+
+[node name="Level1" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 498.998, 393.906 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+collision_layer = 2
+format = 1
+tile_data = PoolIntArray( -458718, 2, 0, -327631, 2, 0, -262118, 0, 0, -262103, 5, 0, -65517, 2, 0, -65487, 1, 0, 32, 2, 0, 65579, 5, 0, 131081, 2, 0, 262193, 1, 0, 262196, 0, 0, 262202, 0, 0, 262208, 0, 0, 262214, 0, 0, 393253, 5, 0, 458777, 0, 0, 458796, 0, 0, 589825, 0, 0, 589831, 0, 0, 589837, 0, 0, 655416, 0, 0, 720918, 5, 0, 720942, 0, 0, 852000, 2, 0, 1048602, 0, 0, 1048618, 5, 0, 1048631, 0, 0, 1114116, 2, 0, 1114125, 2, 0, 1245203, 0, 0, 1310752, 5, 0, 1310767, 0, 0 )
+
+[node name="Hazards" type="Node" parent="."]
+
+[node name="SpikeTop" parent="Hazards" instance=ExtResource( 3 )]
+position = Vector2( 1130.27, 543.76 )
+
+[node name="SpikeTop2" parent="Hazards" instance=ExtResource( 3 )]
+position = Vector2( 1502.15, 677.258 )
+
+[node name="SpikeTop3" parent="Hazards" instance=ExtResource( 3 )]
+position = Vector2( 1029.96, 1060.91 )
+
+[node name="SpikeTop4" parent="Hazards" instance=ExtResource( 3 )]
+position = Vector2( 2228.91, -23.3491 )
+
+[node name="SpikeTop5" parent="Hazards" instance=ExtResource( 3 )]
+position = Vector2( 2934.37, 421.477 )
+
+[node name="SpikeTop6" parent="Hazards" instance=ExtResource( 3 )]
+position = Vector2( 2784.94, 998.361 )
+
+[node name="SpikeTop7" parent="Hazards" instance=ExtResource( 3 )]
+position = Vector2( 1540.82, -92.8533 )
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -20.302
+autoplay = true
+script = SubResource( 1 )
